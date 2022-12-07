@@ -99,10 +99,6 @@ echo "Preparing Allow List..."
 
 print_line
 
-echo "To allow social platforms please read sentinel.md in the documentation directory"
-
-print_line
-
 echo "Configuring IP Tables..."
 ./configure-iptables.sh
 
@@ -165,28 +161,7 @@ history -c
 
 print_line
 
-echo "Applying Sentinel Theme..."
-sudo rm -rf /var/www/html/admin
-sudo ln -s /home/access/sentinel/sentinel-fe /var/www/html/admin
-
-print_line
-
-echo "Configuring Sentinel Updater..."
-cd /home/access/sentinel/scripts/
-sudo cp ./update-sentinel /usr/local/bin/update-sentinel
-sudo chmod +x /usr/local/bin/update-sentinel
-sudo crontab -l | { cat; echo "0 0 1 * * update-sentinel"; } | crontab -
-
-print_line
-
-echo "Configuring Sentinel View..."
-cd view
-./install-view.sh
-
-print_line
-
 echo "Running Checks..."
-cd ..
 ./checks.sh
 
 print_line

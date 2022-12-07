@@ -20,10 +20,10 @@
   <h1 style="text-align: center; font-weight: 600; letter-spacing: 2px; border-bottom: none;">SENTINEL</h1>
 
   <p style="text-align: center; font-size: 18px;">
-    A network wide ad and adware denier, malware and spyware denier, crypto miner denier, tracker and analytics denier, VPN (coming soon), WireGuard VPN remote access server and a validating, recursive, caching DNS resolver all in one!
+    A network wide ad and adware denier, malware and spyware denier, crypto miner denier, tracker and analytics denier and a recursive, caching DNS resolver all in one!
     <br />
     <a href="#easy">Easy Install</a> &#183;
-    <a href="https://github.com/carlowisse/sentinel-lists">Sentinel Lists</a> &#183;
+    <a href="https://github.com/carlowisse/sentinel-lists">Sentinel Lists</a>
   </p>
 </div>
 
@@ -32,20 +32,14 @@
 ## Summary
 * Installs and Configures Pi-Hole
 * Installs and Configures Unbound DNS
-* Installs and Configures WireGuard
 * Configures Static IP
 * _**Denies 3,814,591 Domains**_
 * Allows Platforms by Choice (Social)
 * Increases Pi-Hole Speed With IPTables
 * Massive Collection of Curated Deny and Allow Lists
 * Large Collection of Organised RegEx's
-* Auto Database Cleaner
-* Auto Updater For: Lists, Pi-Hole and Sentinel
-* _**Brand New Custom Clean Dark Theme**_
-* VPN (coming soon)
-
-## Notes
-* Sentinel will update once every month
+* Automatic Database Cleaner
+* Automatic Updater For: Lists, Pi-Hole and Sentinel
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -60,9 +54,9 @@
 
 Security is a very important factor when accessing the internet and unforunately it is not something that is built into systems by default. This is done on purpose so that your privacy is stripped away and your data can be sold.
 
-Sentinel is the answer to these problems. Tunneling you somewhere else, encrypting all of your data (with VPN coming soon), denying all ads, trackers, crypto miners (browser), malware, adware, spyware and more on the network (no need to set it up on every device) and implements a validating, recursive, caching DNS resolver.
+Sentinel is the answer to these problems. Encrypting your data, denying all ads, trackers, crypto miners (browser), malware, adware, spyware and more on the network (no need to set it up on every device) and implements a validating, recursive, caching DNS resolver that runs locally so that YOU are in control.
 
-Here's why Sentinel or even just one of Sentinels components would be good for you:
+Here is why Sentinel or even just one of Sentinels components would be good for you:
 * Deny ads, not just in your browser but also on TV streaming apps and other devices that don't allow plugins
 * Deny trackers
 * Deny telemetry
@@ -77,9 +71,6 @@ Here's why Sentinel or even just one of Sentinels components would be good for y
 * Deny AMP sites
 * Protect yourself against malware, adware and spyware
 * Speed up network using a caching DNS resolver
-* Access your Sentinel anywhere in the world using WireGuard
-* Mask yourself from your Government AND ISP (with VPN coming soon)
-* Bypass bandwidth throttling (with VPN coming soon)
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -89,11 +80,8 @@ Here's why Sentinel or even just one of Sentinels components would be good for y
 **Software**
 * [Pi-Hole](https://github.com/pi-hole)
 * [Unbound](https://github.com/NLnetLabs/unbound)
-* [WireGuard](https://git.zx2c4.com/wireguard-linux/tree/drivers/net/wireguard/)
 * [Sentinel Lists](https://github.com/carlowisse/sentinel-lists)
 * [Raspberry Pi OS](https://www.raspberrypi.com/software/)
-* [NordVPN](https://nordvpn.com/) (coming soon)
-* [OpenVPN](https://github.com/OpenVPN/openvpn) (coming soon)
 
 **Hardware**
 * [Raspberry Pi 4 Model B 8GB](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
@@ -146,8 +134,6 @@ git clone https://github.com/carlowisse/sentinel.git
 
 * [Pi-Hole Setup With 3.8 Million+ Domains Denied (and allow-list options)](documentation/Sentinel.md)
 * [Validating, Recursive, Caching DNS Resolver](documentation/SentinelUnbound.md)
-* [WireGuard Remote Access](documentation/SentinelGuard.md)
-* VPN Using NordVPN and OpenVPN (coming soon)
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -181,7 +167,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE.txt) for more informati
 <br>
 
 ## Contact
-Carlo Wisse - [Twitter](https://twitter.com/carlowisse) - [Email](mailto:me@carlowisse.com)
+Carlo Wisse - [Twitter](https://twitter.com/carlowisse) - [Email](mailto:contact@carlowisse.com)
 
 <br>
 
