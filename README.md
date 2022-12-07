@@ -33,11 +33,14 @@
 * Installs and Configures Pi-Hole
 * Installs and Configures Unbound DNS
 * Configures Static IP
-* _**Denies 3,814,591 Domains**_
+* _**9,110,774 Domain Denials**_
+* _**818 Regex Denials**_
 * Allows Platforms by Choice (Social)
 * Increases Pi-Hole Speed With IPTables
 * Massive Collection of Curated Deny and Allow Lists
 * Large Collection of Organised RegEx's
+* _**1400 CONTROLLED Domain Allowables_**
+* _**27 CONTROLLED Regex Allowables**_
 * Automatic Database Cleaner
 * Automatic Updater For: Lists, Pi-Hole and Sentinel
 
