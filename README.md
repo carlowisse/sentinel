@@ -39,7 +39,7 @@
 * Increases Pi-Hole Speed With IPTables
 * Massive Collection of Curated Deny and Allow Lists
 * Large Collection of Organised RegEx's
-* _**1400 CONTROLLED Domain Allowables_**
+* _**1400 CONTROLLED Domain Allowables**_
 * _**27 CONTROLLED Regex Allowables**_
 * Automatic Database Cleaner
 * Automatic Updater For: Lists, Pi-Hole and Sentinel
