@@ -1,0 +1,124 @@
+#!/bin/bash
+
+print_line() {
+    echo " "
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
+    echo " "
+}
+
+runasroot=1
+
+echo "Updating Sentinel..."
+
+print_line
+
+echo "Purging Sentinel..."
+pihole --regex --nuke
+pihole --white-regex --nuke
+pihole -w --nuke
+pihole -b --nuke
+
+sudo sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"
+echo "Database has been purged"
+
+print_line
+
+echo "Flushing Sentinel..."
+pihole restartdns reload
+pihole restartdns
+pihole arpflush
+pihole flush
+
+print_line
+
+echo "Updating PiHole..."
+pihole -up
+
+print_line
+
+echo "Updating Sentinel"
+cd
+
+cd sentinel
+
+git reset --hard origin/main
+
+git pull --all
+
+echo "Updating Sentinel Lists..."
+cd ~/sentinel/scripts/
+
+sudo chmod +x ./deny-lists.sh
+sudo chmod +x ./allow-lists.sh
+sudo chmod +x ./apply-allow-list.sh
+sudo chmod +x ./apply-allow-regex-list.sh
+sudo chmod +x ./apply-regex-list.sh
+sudo chmod +x ./theme/apply-theme.sh
+
+./deny-lists.sh
+./allow-lists.sh
+
+print_line
+
+echo "Compiling Database..."
+pihole -g
+
+print_line
+
+echo "Cleaning Up..."
+
+print_line
+
+echo "Unclean Database:"
+sudo sqlite3 /etc/pihole/gravity.db "SELECT COUNT(*) FROM gravity;"
+
+print_line
+
+echo "Cleaning Database..."
+sudo sqlite3 /etc/pihole/gravity.db "DELETE FROM gravity WHERE rowid NOT IN (SELECT rowid FROM gravity GROUP BY domain); VACUUM;"
+
+print_line
+
+echo "Cleaned Database:"
+sudo sqlite3 /etc/pihole/gravity.db "SELECT COUNT(*) FROM gravity;"
+
+print_line
+
+echo "Flushing..."
+pihole flush
+
+print_line
+
+echo "Reloading..."
+pihole restartdns reload
+
+print_line
+
+echo "Restarting DNS..."
+pihole restartdns
+
+
+echo "Re-Applying Theme..."
+sudo rm -rf /var/www/html/admin
+sudo ln -s /home/access/sentinel/sentinel-fe /var/www/html/admin
+
+print_line
+
+echo "Flushing System..."
+pihole restartdns reload
+pihole restartdns
+pihole arpflush
+pihole flush
+
+print_line
+
+echo "Initialising Updater..."
+cd /home/access/sentinel/scripts/
+sudo rm /usr/local/bin/update-sentinel
+sudo cp ./update-sentinel /usr/local/bin/update-sentinel
+sudo chmod +x /usr/local/bin/update-sentinel
+
+print_line
+
+echo "Rebooting Pi..."
+sudo reboot

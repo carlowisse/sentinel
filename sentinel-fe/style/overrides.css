@@ -1,0 +1,30 @@
+* {
+  font-family: 'Lato', sans-serif !important;
+}
+
+.box-title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.small-box p {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.box {
+  border: none;
+  background-color: #111111;
+}
+
+.no-danger-area {
+  border: none;
+  background-color: #3bec78;
+  color: #111111;
+}
+
+.danger-area {
+  border: none;
+  background-color: #ec3b57;
+  color: #111111;
+}
