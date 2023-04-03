@@ -33,7 +33,7 @@
 * Installs and Configures Pi-Hole
 * Installs and Configures Unbound DNS
 * Configures Static IP
-* _**9,110,774 Domain Denials**_
+* _**8,274,745 Domain Denials**_
 * _**818 Regex Denials**_
 * Allows Platforms by Choice (Social)
 * Increases Pi-Hole Speed With IPTables
@@ -135,7 +135,7 @@ git clone https://github.com/carlowisse/sentinel.git
 ## Manual Installation
 > _If you do not wish to set up your security router as a Sentinel install, feel free to only follow the instruction sets that you would like. They are decoupled and do not rely on eachother._
 
-* [Pi-Hole Setup With 3.8 Million+ Domains Denied (and allow-list options)](documentation/Sentinel.md)
+* [Pi-Hole Setup With 8.2 Million+ Domains Denied (and allow-list options)](documentation/Sentinel.md)
 * [Validating, Recursive, Caching DNS Resolver](documentation/SentinelUnbound.md)
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>

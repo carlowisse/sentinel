@@ -171,6 +171,11 @@ echo "Use your previously set password to login"
 
 print_line
 
+echo "Installing PADD"
+cd ~
+sudo curl -sSL https://install.padd.sh -o padd.sh
+sudo chmod +x padd.sh
+
 echo "Rebooting Pi..."
 sudo reboot
 
