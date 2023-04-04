@@ -57,7 +57,7 @@ DNS_FQDN_REQUIRED=true
 DNS_BOGUS_PRIV=true
 DNSSEC=false
 REV_SERVER=false
-WEBTHEME=default-dark
+WEBTHEME=default-darker
 WEBUIBOXEDLAYOUT=traditional
 EOT
 
