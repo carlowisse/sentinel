@@ -126,12 +126,7 @@ curl -sSL https://install.pi-hole.net | bash
 
 ### Sentinel Deny List
 1. Navigate to `sentinel/scripts/`
-2. Run `bash deny-lists.sh`
-
-## Sentinel Allow List
-> I recommend using `common.txt` and `url_shorteners.txt`.
-1. Navigate to `sentinel/scripts/`
-2. Run `bash allow-lists.sh`
+2. Run `bash load-lists.sh`
 
 ## Social Platforms
 > I have split social platforms up so you can choose to enable the ones you would like.
@@ -145,7 +140,7 @@ cd sentinel/scripts
 
 chmod +x ./apply-allow-list.sh
 
-./apply-allow-list.sh https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/domains/allow/social/messenger.txt
+./apply-allow-list.sh https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/domains/social/messenger.txt
 ```
 
 **OR FOR REGEX**
@@ -155,7 +150,7 @@ cd sentinel/scripts
 
 chmod +x ./apply-allow-regex-list.sh
 
-./apply-allow-regex-list.sh https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/regex/allow/social/messenger.txt
+./apply-allow-regex-list.sh https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/regex/social/messenger.txt
 ```
 
 > You can use **ANY** raw URL from around the internet.

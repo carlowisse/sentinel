@@ -33,16 +33,11 @@
 * Installs and Configures Pi-Hole
 * Installs and Configures Unbound DNS
 * Configures Static IP
-* _**8,274,745 Domain Denials**_
-* _**818 Regex Denials**_
+* _**8,263,061 Domains**_
+* _**1,198 Regexes**_
 * Allows Platforms by Choice (Social)
 * Increases Pi-Hole Speed With IPTables
-* Massive Collection of Curated Deny and Allow Lists
-* Large Collection of Organised RegEx's
-* _**1400 CONTROLLED Domain Allowables**_
-* _**27 CONTROLLED Regex Allowables**_
-* Automatic Database Cleaner
-* Automatic Updater For: Lists, Pi-Hole and Sentinel
+* Massive Collection of Curated Domain and Regex Lists
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -59,7 +54,7 @@ Security is a very important factor when accessing the internet and unforunately
 
 Sentinel is the answer to these problems. Encrypting your data, denying all ads, trackers, crypto miners (browser), malware, adware, spyware and more on the network (no need to set it up on every device) and implements a validating, recursive, caching DNS resolver that runs locally so that YOU are in control.
 
-Here is why Sentinel or even just one of Sentinels components would be good for you:
+Here is why Sentinel would be good for you:
 * Deny ads, not just in your browser but also on TV streaming apps and other devices that don't allow plugins
 * Deny trackers
 * Deny telemetry
@@ -160,7 +155,7 @@ If you have a suggestion that would make this better, please fork the repo and c
 ## Issues
 If there are any issues during install, or manual configuration (steps missed/needed), please raise an issue on the issue tab and I will look into it.
 
-If there is an issue with the lists (deny, allow or regex) please go to the [sentinel-lists](https://github.com/carlowisse/sentinel-lists) repository and raise an issue there.
+If there is an issue with the lists please go to the [sentinel-lists](https://github.com/carlowisse/sentinel-lists) repository and raise an issue there.
 
 <br>
 

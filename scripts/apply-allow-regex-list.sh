@@ -1,6 +1,6 @@
 #!/bin/bash
 # chmod +x ./apply-allow-regex-list.sh
-# ./apply-allow-regex-list.sh https://DOMAIN.HERE
+# ./apply-allow-regex-list.sh https://DOMAIN.HERE/PATH/TO/HOSTED/FILE
 
 URL=$1
 COMMENT=${URL##*/}

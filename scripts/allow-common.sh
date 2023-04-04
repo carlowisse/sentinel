@@ -1,50 +1,36 @@
 #!/bin/bash
+### SENTINEL-LISTS (https://github.com/carlowisse/sentinel-lists) ###
 
-## Variables
-DOMAINALLOW="https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/domains/allow"
-REGEXALLOW="https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/regex/allow"
+### Variables ###
+DOMAINS="https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/domains"
+REGEXES="https://media.githubusercontent.com/media/carlowisse/sentinel-lists/main/lists/regexes"
 
-# ---------------------------------------------------------------------------------------------------- #
+### DOMAINS ###
+./apply-allow-list.sh $DOMAINS/other/common.txt
+./apply-allow-list.sh $DOMAINS/other/url_shorteners.txt
 
-# SENTINEL (https://github.com/carlowisse/sentinel-lists)
+### REGEX ###
+./apply-allow-regex-list.sh $REGEXES/services/amazon.txt
+./apply-allow-regex-list.sh $REGEXES/services/apple.txt
+./apply-allow-regex-list.sh $REGEXES/services/ebay.txt
+./apply-allow-regex-list.sh $REGEXES/services/epicgames.txt
+./apply-allow-regex-list.sh $REGEXES/services/giphy.txt
+./apply-allow-regex-list.sh $REGEXES/services/github.txt
+./apply-allow-regex-list.sh $REGEXES/services/imgur.txt
+./apply-allow-regex-list.sh $REGEXES/services/netflix.txt
+./apply-allow-regex-list.sh $REGEXES/services/oculus.txt
+./apply-allow-regex-list.sh $REGEXES/services/playstation.txt
+./apply-allow-regex-list.sh $REGEXES/services/spotify.txt
+./apply-allow-regex-list.sh $REGEXES/services/steam.txt
+./apply-allow-regex-list.sh $REGEXES/services/youtube.txt
 
-## DOMAINS
-### General
-./apply-allow-list.sh $DOMAINALLOW/electronicarts.txt
-./apply-allow-list.sh $DOMAINALLOW/epicgames.txt
-./apply-allow-list.sh $DOMAINALLOW/stackoverflow.txt
-./apply-allow-list.sh $DOMAINALLOW/windows_connectivity_test.txt
+./apply-allow-regex-list.sh $REGEXES/social/discord.txt
+./apply-allow-regex-list.sh $REGEXES/social/messenger.txt
+./apply-allow-regex-list.sh $REGEXES/social/reddit.txt
+./apply-allow-regex-list.sh $REGEXES/social/slack.txt
+./apply-allow-regex-list.sh $REGEXES/social/whatsapp.txt
 
-### Services
-./apply-allow-list.sh $DOMAINALLOW/services/apple_app_store.txt
-./apply-allow-list.sh $DOMAINALLOW/services/namecheap.txt
-./apply-allow-list.sh $DOMAINALLOW/services/netflix.txt
+./apply-allow-regex-list.sh $REGEXES/other/cdn.txt
 
-### Social
-./apply-allow-list.sh $DOMAINALLOW/social/discord.txt
-./apply-allow-list.sh $DOMAINALLOW/social/messenger.txt
-./apply-allow-list.sh $DOMAINALLOW/social/youtube.txt
-
-## REGEX
-### Services
-./apply-allow-regex-list.sh $REGEXALLOW/services/apple.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/binance.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/commbank.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/ebay.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/giphy.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/github.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/google.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/medium.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/netflix.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/psn.txt
-./apply-allow-regex-list.sh $REGEXALLOW/services/steam.txt
-
-### Social
-./apply-allow-regex-list.sh $REGEXALLOW/social/gmail.txt
-./apply-allow-regex-list.sh $REGEXALLOW/social/messenger.txt
-./apply-allow-regex-list.sh $REGEXALLOW/social/reddit.txt
-./apply-allow-regex-list.sh $REGEXALLOW/social/slack.txt
-./apply-allow-regex-list.sh $REGEXALLOW/social/whatsapp.txt
-./apply-allow-regex-list.sh $REGEXALLOW/social/youtube.txt
-
-# ---------------------------------------------------------------------------------------------------- #
+### !! LET THEM IN !! ###
+./apply-allow-regex-list.sh $REGEXES/letthemin/bitwarden.txt

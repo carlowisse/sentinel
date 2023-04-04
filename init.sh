@@ -11,8 +11,7 @@ echo "Preparing Scripts..."
 cd /home/$SUDO_USER/sentinel/scripts/
 
 sudo chmod +x ./checks.sh
-sudo chmod +x ./deny-lists.sh
-sudo chmod +x ./allow-lists.sh
+sudo chmod +x ./load-lists.sh
 sudo chmod +x ./apply-allow-list.sh
 sudo chmod +x ./apply-allow-regex-list.sh
 sudo chmod +x ./apply-regex-list.sh
@@ -20,8 +19,6 @@ sudo chmod +x ./apply-regex-list.sh
 sudo chmod +x ./configure-iptables.sh
 
 sudo chmod +x ./unbound/install-unbound.sh
-
-sudo chmod +x ./view/install-view.sh
 
 print_line
 
@@ -89,13 +86,7 @@ print_line
 # Deny List
 echo "Running Sentinel Collection..."
 echo "Preparing Deny List..."
-./deny-lists.sh
-
-print_line
-
-# Allow List
-echo "Preparing Allow List..."
-./allow-lists.sh
+./load-lists.sh
 
 print_line
 
@@ -166,15 +157,17 @@ echo "Running Checks..."
 
 print_line
 
-echo "Go to https://$PIIP/admin"
+echo "Go to http://$PIIP/admin"
 echo "Use your previously set password to login"
 
 print_line
 
 echo "Installing PADD"
-cd ~
+cd
 sudo curl -sSL https://install.padd.sh -o padd.sh
 sudo chmod +x padd.sh
+
+print_line
 
 echo "Rebooting Pi..."
 sudo reboot
