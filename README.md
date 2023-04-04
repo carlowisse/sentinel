@@ -33,8 +33,8 @@
 * Installs and Configures Pi-Hole
 * Installs and Configures Unbound DNS
 * Configures Static IP
-* _**8,263,061 Domains**_
-* _**1,198 Regexes**_
+* _**8,263,054 Domains**_
+* _**1,186 Regexes**_
 * Allows Platforms by Choice (Social)
 * Increases Pi-Hole Speed With IPTables
 * Massive Collection of Curated Domain and Regex Lists
