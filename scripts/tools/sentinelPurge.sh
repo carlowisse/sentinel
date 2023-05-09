@@ -1,11 +1,9 @@
 #!/bin/bash
 
-# ask if user wants to purge all lists
 echo "This will purge all lists from your Sentinel"
+read -p "Are you sure? (y/n): " reply
 
-read -p "Are you sure? (y/n): " -n 1 -r
-
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+if [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
     echo "Purging..."
 
     pihole --regex --nuke
@@ -14,7 +12,20 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     pihole -b --nuke
 
     sudo sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"
-    echo "Sentinel purged."
+
+    pihole -f
+    pihole arpflush
+    pihole restartdns
+
+    pihole -g
+
+    sudo service pihole-FTL stop
+
+    sudo rm /etc/pihole/pihole-FTL.db
+
+    sudo service pihole-FTL start
+
+    echo "\n Sentinel purged."
 else
     echo "Sentinel standing down..."
     exit 1

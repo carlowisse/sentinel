@@ -16,7 +16,7 @@ for CATEGORY in ads adult agencies amp analytics compilation crypto malware misc
         FILE_URL="${base_url}/domains/${CATEGORY}/${CATEGORY}.txt"
         sudo sqlite3 /etc/pihole/gravity.db "INSERT OR IGNORE INTO adlist (address, enabled, comment) VALUES ('$FILE_URL', 1, '$CATEGORY');"
     else
-        for ((i = 0; i <= COUNT; i++)); do
+        for ((i = 0; i < COUNT; i++)); do
             if [[ $i -lt 10 ]]; then
                 FILE_URL="${base_url}/domains/${CATEGORY}/${CATEGORY}_0${i}.txt"
             else
@@ -37,7 +37,7 @@ for CATEGORY in ads adult amp analytics compilation crypto malware misc services
         FILE_URL="${base_url}/regexes/${CATEGORY}/${CATEGORY}.txt"
         ./apply-regex-list.sh $FILE_URL $CATEGORY
     else
-        for ((i = 0; i <= COUNT; i++)); do
+        for ((i = 0; i < COUNT; i++)); do
             if [[ $i -lt 10 ]]; then
                 FILE_URL="${base_url}/regexes/${CATEGORY}/${CATEGORY}_0${i}.txt"
             else
