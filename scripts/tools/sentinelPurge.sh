@@ -25,7 +25,8 @@ if [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
 
     sudo service pihole-FTL start
 
-    echo "\n Sentinel purged."
+    echo ""
+    echo "Sentinel purged."
 else
     echo "Sentinel standing down..."
     exit 1
