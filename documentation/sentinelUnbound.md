@@ -21,7 +21,6 @@ chmod +x install-unbound.sh
 sudo apt update
 ```
 
-
 ## Test Configuration
 Expect: `SERVFAIL`
 ```
@@ -32,8 +31,6 @@ Expect: `NOERROR`
 ```
 dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335
 ```
-
-
 
 ## Configure Sentinel To Use Unbound
 1. Go to pi-hole web interface
