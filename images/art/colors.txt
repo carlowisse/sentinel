@@ -1,2 +1,0 @@
-Blue: #4831D1
-Yellow: #CCF381

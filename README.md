@@ -14,7 +14,7 @@
 <!-- PROJECT LOGO -->
 <div align="center">
   <a href="https://github.com/carlowisse/sentinel">
-    <img src="./images/shield.svg" alt="Logo" width="150" height="150">
+    <img src="./assets/logos/svg/sentinelCore_dark.svg" alt="Logo" width="150" height="150">
   </a>
 
   <h1 style="text-align: center; font-weight: 600; letter-spacing: 2px; border-bottom: none;">SENTINEL</h1>
