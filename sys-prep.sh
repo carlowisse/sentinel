@@ -1,5 +1,4 @@
 #!/bin/bash
-runasroot=1
 
 print_line() {
     echo " "
@@ -22,12 +21,12 @@ sudo touch /home/access/.hushlogin
 print_line
 
 echo "Disabling Wi-Fi.."
-sudo echo "dtoverlay=disable-wifi" | sudo tee -a /boot/config.txt
+sudo echo "dtoverlay=disable-wifi" | sudo tee -a /boot/config.txt >/dev/null
 
 print_line
 
 echo "Disabling Bluetooth..."
-sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt
+sudo echo "dtoverlay=disable-bt" | sudo tee -a /boot/config.txt >/dev/null
 
 print_line
 
@@ -49,15 +48,20 @@ EOT
 print_line
 
 echo "Updating System..."
-sudo apt update -y
+sudo apt-get update -y
 
 print_line
 
 echo "Upgrading System..."
-sudo apt upgrade -y
+sudo apt-get upgrade -y
 
-echo "Updating Kernel..."
+echo "Upgrading Distribution..."
 sudo apt dist-upgrade -y
+
+echo "Cleaning Up..."
+sudo apt-get autoremove -y
+sudo apt-get autoclean -y
+sudo apt-get clean -y
 
 print_line
 

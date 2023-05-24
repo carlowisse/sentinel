@@ -1,7 +1,5 @@
 #!/bin/bash
 
-runasroot=1
-
 sudo debconf-set-selections <<EOT
 iptables-persistent iptables-persistent/autosave_v4 boolean true
 iptables-persistent iptables-persistent/autosave_v6 boolean true

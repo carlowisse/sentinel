@@ -1,5 +1,4 @@
 #!/bin/bash
-runasroot=1
 
 print_line() {
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -

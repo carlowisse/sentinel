@@ -13,48 +13,57 @@
 
 <!-- PROJECT LOGO -->
 <div align="center">
-  <a href="https://github.com/carlowisse/sentinel">
-    <img src="./assets/logos/svg/sentinelCore_dark.svg" alt="Logo" width="150" height="150">
-  </a>
+  <img src="./assets/logos/svg/sentinelCore_dark.svg" alt="Logo" width="150" height="150">
 
   <h1 style="text-align: center; font-weight: 600; letter-spacing: 2px; border-bottom: none;">SENTINEL</h1>
 
   <p style="text-align: center; font-size: 18px;">
-    A network wide ad and adware denier, malware and spyware denier, crypto miner denier, tracker and analytics denier and a recursive, caching DNS resolver all in one!
+    A network wide ad, adware, malware, spyware, tracker, analytics and crypto miner denier with a recursive, caching DNS resolver, DHCP Service and Alerting system and a Virtual Private Network all-in-one!
     <br />
-    <a href="#easy">Easy Install</a> &#183;
-    <a href="https://github.com/carlowisse/sentinel-lists">Sentinel Lists</a>
+    <a href="https://github.com/carlowisse/sentinel-lists">sentinelLists</a>&nbsp; &#183; &nbsp;
+    <a href="https://github.com/carlowisse/sentinel-unbound">sentinelUnbound</a>&nbsp; &#183; &nbsp;
+    <a href="https://github.com/carlowisse/sentinel">sentinelCore</a>&nbsp; &#183; &nbsp;
+    <a href="https://github.com/carlowisse/sentinel-alert">sentinelAlert</a>&nbsp; &#183; &nbsp;
+    <a href="https://github.com/carlowisse/sentinel-guard">sentinelGuard</a>
   </p>
+
+  <br>
+
+  <img src="./assets/logos/svg/sentinel_banner_dark.svg" alt="Logo" width="80%">
 </div>
 
 <br>
 
+## Modules
+* `sentinelCore` - A custom PI-Hole configuration
+* `sentinelLists` - A supermassive collection of curated **domains (8,849,669)** and **regexs (1,186)** lists
+* `sentinelUnbound` - A custom Unbound configuration
+* `sentinelAlert` - A custom DHCP Managment and Alerting system
+* `sentinelGuard` - A custom VPN (WireGuard) configuration with Web UI for easy management
+
 ## Summary
 * Installs and Configures Pi-Hole
 * Installs and Configures Unbound DNS
+* Installs and Configures WireGuard VPN
+* Installs and Configures PiAlert
+* Loads Sentinel Lists
 * Configures Static IP
-* _**8,263,054 Domains**_
-* _**1,186 Regexes**_
-* Allows Platforms by Choice (Social)
-* Increases Pi-Hole Speed With IPTables
-* Massive Collection of Curated Domain and Regex Lists
+* Configures Firewall
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
 <br>
 
 ## About The Project
-<div align="center">
-  <a href="https://github.com/carlowisse/sentinel">
-    <img src="./images/banner-interim.png" alt="Logo" width="80%">
-  </a>
-</div>
-
 Security is a very important factor when accessing the internet and unforunately it is not something that is built into systems by default. This is done on purpose so that your privacy is stripped away and your data can be sold.
 
-Sentinel is the answer to these problems. Encrypting your data, denying all ads, trackers, crypto miners (browser), malware, adware, spyware and more on the network (no need to set it up on every device) and implements a validating, recursive, caching DNS resolver that runs locally so that YOU are in control.
+Sentinel is the answer to these problems. Encrypting your data, denying all ads, trackers, crypto miners (browser), malware, adware, spyware and much more on a network level (no need to set it up on every device) and implements a validating, recursive, caching DNS resolver that runs locally so that YOU are in control.
 
-Here is why Sentinel would be good for you:
+Alongside this, Sentinel also comes with a built in DHCP server that has a management and alerting system so that you can see what devices are on your network and if any new devices join, you will be notified.
+
+Finally, Sentinel also comes with a fully configured VPN (WireGuard) that you can use to access your network from anywhere in the world. This is great for when you are out and about and would like to leverage the security of your **sentinelEnabled** home network.
+
+**Here is why Sentinel would be good for you**
 * Deny ads, not just in your browser but also on TV streaming apps and other devices that don't allow plugins
 * Deny trackers
 * Deny telemetry
@@ -64,11 +73,14 @@ Here is why Sentinel would be good for you:
 * Deny browser based crypto miners
 * Deny malware
 * Deny agency snooping (CIA, FBI, NSA, etc.)
+* Deny all adult sites
 * Deny constant social network callouts
 * Deny autodiscover leaks
 * Deny AMP sites
 * Protect yourself against malware, adware and spyware
 * Speed up network using a caching DNS resolver
+* Get remote access into your network using a VPN
+* Control and monitor your network using a DHCP management and alerting system
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -77,9 +89,9 @@ Here is why Sentinel would be good for you:
 ## Built With
 **Software**
 * [Pi-Hole](https://github.com/pi-hole)
+* [Pi.Alert](https://github.com/leiweibau/Pi.Alert)
 * [Unbound](https://github.com/NLnetLabs/unbound)
-* [Sentinel Lists](https://github.com/carlowisse/sentinel-lists)
-* [Raspberry Pi OS](https://www.raspberrypi.com/software/)
+* [WireGuard Tools](https://github.com/WireGuard/wireguard-tools)
 
 **Hardware**
 * [Raspberry Pi 4 Model B 8GB](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
@@ -97,13 +109,8 @@ Here is why Sentinel would be good for you:
 
 <br>
 
-## Getting Started
-All instruction sets require the cloning or downloading of this repository as there are helper scripts used in each instruction set.
-
-<br>
-
 ## Requirements
-### Install Git & Clone Repo On Raspeberry Pi
+### Install Git & Clone Repo On To Raspeberry Pi
 > You must clone Sentinel in the root directory
 ```
 sudo apt install git
@@ -113,27 +120,15 @@ cd
 git clone https://github.com/carlowisse/sentinel.git
 ```
 
-<span id="easy">
-
 <br>
 
-## The Easy Way
+## Installation
 > _This installation uses a single script to set up **Static IP**, **Pi-Hole**, **Unbound**, **IPTables** and **Sentinel**_
 
 1. Make executable: `chmod +x ./sys-prep.sh`
 2. Make executable: `chmod +x ./init.sh`
 3. Prepare system: `sudo ./sys-prep.sh`
 4. Run installer: `sudo ./init.sh`
-
-<br>
-
-## Manual Installation
-> _If you do not wish to set up your security router as a Sentinel install, feel free to only follow the instruction sets that you would like. They are decoupled and do not rely on eachother._
-
-* [Pi-Hole Setup With 8.2 Million+ Domains Denied (and allow-list options)](documentation/Sentinel.md)
-* [Validating, Recursive, Caching DNS Resolver](documentation/SentinelUnbound.md)
-
-<a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
 <br>
 
@@ -153,7 +148,7 @@ If you have a suggestion that would make this better, please fork the repo and c
 <br>
 
 ## Issues
-If there are any issues during install, or manual configuration (steps missed/needed), please raise an issue on the issue tab and I will look into it.
+If there are any issues please raise an issue on the issue tab and I will look into it.
 
 If there is an issue with the lists please go to the [sentinel-lists](https://github.com/carlowisse/sentinel-lists) repository and raise an issue there.
 
@@ -171,5 +166,6 @@ Carlo Wisse - [Twitter](https://twitter.com/carlowisse) - [Email](mailto:contact
 
 ## Acknowledgments
 * [Choose an Open Source License](https://choosealicense.com)
+* [leiweibau](https://github.com/leiweibau)
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
