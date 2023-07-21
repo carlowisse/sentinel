@@ -1,7 +1,9 @@
 const http = require('http');
 const fs = require('fs');
 const { exec } = require('child_process');
+require('dotenv').config();
 
+const PORT = process.env.UNBOUND_FRONT_PORT;
 const HTML_FILE = './www/index.html';
 const STATS_UPDATE_INTERVAL = 5000; // Update interval in milliseconds
 
@@ -69,7 +71,6 @@ const server = http.createServer((req, res) => {
 });
 
 // Start the server
-const PORT = 3000;
 server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 

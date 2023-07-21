@@ -24,10 +24,12 @@ echo "PREPARING ENVIRONMENT"
 GUARD_PORT=$(get_input "Enter WireGuard Port")
 GUARD_FRONT_PORT=$(get_input "Enter WireGuard Frontend Port")
 GUARD_PASSWORD=$(get_input "Enter WireGuard Frontend Password")
+UNBOUND_FRONT_PORT=$(get_input "Enter Unbound Frontend Port")
 TIMEZONE=$(get_input "Enter Timezone (e.g. Australia/Sydney)")
 PIHOLE_PASSWORD=$(get_input "Enter PiHole Frontend Password")
 
 # STATIC VARIABLES
+SENTINEL_PATH="/home/$SUDO_USER/sentinel"
 ENV_FILE="./test_env.conf"
 ROUTERIP=$(ip route show | grep -i 'default via' | awk '{print $3 }')
 PIIP=$(hostname -I | tr -d ' ')
@@ -65,7 +67,17 @@ apt-get upgrade -y
 apt dist-upgrade -y
 
 # INSTALL DEPENDENCIES
-apt install git python3 python3-pip sqlite3 iptables-persistent -y
+apt install git python3 python3-pip sqlite3 iptables-persistent wireguard-tools ufw -y
+
+# INSTALL NODE AND NPM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+nvm install node
+npm install -g npm@latest
+npm install pm2@latest -g
+ln -s $(nvm which node) /usr/sbin/node
+ln -s "$(dirname "$(nvm which node)")/pm2" /usr/sbin/pm2
 
 # CLEAN UP SYSTEM
 apt-get autoremove -y
@@ -105,18 +117,32 @@ ip6tables -A INPUT -p udp --dport 443 -j REJECT --reject-with icmp6-port-unreach
 sh -c "iptables-save > /etc/iptables/rules.v4"
 sh -c "ip6tables-save > /etc/iptables/rules.v6"
 
+# CONFIGURE UFW
+ufw --force enable
+echo y | ufw reset
+ufw --force enable
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22
+ufw allow 80
+ufw allow $GUARD_PORT
+ufw allow $GUARD_FRONT_PORT
+ufw allow $UNBOUND_FRONT_PORT
+
+systemctl restart ufw
+
 print_line
 
 ########## PREPARE SENTINEL ##########
 echo "Preparing Sentinel..."
 
 # GET SENTINEL
-cd $HOME
+cd /home/$SUDO_USER
 git clone https://github.com/carlowisse/sentinel.git
 
 # PREPARE SENTINEL SCRIPTS
-cd $HOME/sentinel/scripts/
-chmod +x ./checks.sh
+cd $SENTINEL_PATH/scripts/
+chmod +x ./tools/sentinel-check.sh
 chmod +x ./load-lists.sh
 chmod +x ./apply-white-list.sh
 chmod +x ./apply-white-regex-list.sh
@@ -194,6 +220,35 @@ pihole flush
 
 print_line
 
+########## UNBOUND ##########
+echo "Configuring sentinelUnbound..."
+
+systemctl disable systemd-resolved
+apt install unbound -y
+ln -s $SENTINEL_PATH/unbound/sentinel-unbound.conf /etc/unbound/unbound.conf.d/
+systemctl disable unbound-resolvconf.service
+systemctl stop unbound-resolvconf.service
+unbound-anchor
+rm /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
+sed -i -n '/unbound/!p' /etc/resolvconf.conf
+systemctl restart dhcpcd
+systemctl restart unbound
+echo "edns-packet-max=1232" | tee -a /etc/dnsmasq.d/99-edns.conf
+
+# INSTALL UNBOUND FRONTEND
+cd $SENTINEL_PATH/unbound
+npm install
+
+# START UNBOUND FRONTEND
+pm2 start sentinel-unbound.js --name sentinel-unbound
+
+# ENFORCE PM2 TO START ON BOOT
+startup_output=$(pm2 startup)
+command=$(echo "$startup_output" | grep -o 'env PATH=.*')
+eval $command
+
+print_line
+
 ########## CLEAN UP INSTALL ##########
 # CLEAN UP HISTORY
 history -c
@@ -201,8 +256,8 @@ history -c
 print_line
 
 ########## RUN CHECKS ##########
-echo "Running Checks..."
-./checks.sh
+echo "Running sentinelCheck..."
+bash $SENTINEL_PATH/scripts/tools/sentinel-check.sh
 
 print_line
 

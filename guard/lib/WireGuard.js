@@ -54,6 +54,7 @@ module.exports = class WireGuard {
                         },
                         clients: {},
                     };
+
                     debug('Configuration generated.');
                 }
 
@@ -114,18 +115,23 @@ AllowedIPs = ${client.address}/32`;
         }
 
         debug('Config saving...');
+
         await fs.writeFile(path.join(WG_PATH, 'wg0.json'), JSON.stringify(config, false, 2), {
             mode: 0o660,
         });
+
         await fs.writeFile(path.join(WG_PATH, 'wg0.conf'), result, {
             mode: 0o600,
         });
+
         debug('Config saved.');
     }
 
     async __syncConfig() {
         debug('Config syncing...');
+
         await Util.exec('wg syncconf wg0 <(wg-quick strip wg0)');
+
         debug('Config synced.');
     }
 
@@ -160,9 +166,9 @@ AllowedIPs = ${client.address}/32`;
             .forEach(line => {
                 const [
                     publicKey,
-                    preSharedKey, // eslint-disable-line no-unused-vars
-                    endpoint, // eslint-disable-line no-unused-vars
-                    allowedIps, // eslint-disable-line no-unused-vars
+                    preSharedKey,
+                    endpoint,
+                    allowedIps,
                     latestHandshakeAt,
                     transferRx,
                     transferTx,
@@ -173,9 +179,7 @@ AllowedIPs = ${client.address}/32`;
 
                 if (!client) return;
 
-                client.latestHandshakeAt = latestHandshakeAt === '0'
-                    ? null
-                    : new Date(Number(`${latestHandshakeAt}000`));
+                client.latestHandshakeAt = latestHandshakeAt === '0' ? null : new Date(Number(`${latestHandshakeAt}000`));
                 client.transferRx = Number(transferRx);
                 client.transferTx = Number(transferTx);
                 client.persistentKeepalive = persistentKeepalive;
