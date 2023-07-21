@@ -1,0 +1,11 @@
+{
+  "name": "SentinelGuard",
+  "display": "standalone",
+  "background_color": "#000000",
+  "icons": [
+    {
+      "src": "img/favicon.png",
+      "type": "image/png"
+    }
+  ]
+}

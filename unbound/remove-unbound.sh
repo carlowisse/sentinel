@@ -1,7 +1,5 @@
 #!/bin/bash
 
-runasroot=1
-
 sudo systemctl stop unbound
 
 sudo systemctl disable unbound

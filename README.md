@@ -2,11 +2,14 @@
 
 <div align="center">
 
-| DONATE                                                                                                                                                                         | CORE                                                                                                                 | LANGAUGES                                                                                                                               |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/carlowisse) | ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi&color=c7053d) | ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)                                  |
-| [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/cjwisse?country.x=AU&locale.x=en_AU)                 | ![Debian](https://img.shields.io/badge/Debian-D70A53?style=for-the-badge&logo=debian&logoColor=white&color=CE0058)   | ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white&color=222222) |
-
+|                                                                                               DONATE                                                                                               |                                                               CORE                                                               |                                                            LANGUAGES                                                             |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://www.buymeacoffee.com/carlowisse"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-222222?style=for-the-badge&logo=buy-me-a-coffee&logoColor=EEEEEE" width="100%"></a> | <img src="https://img.shields.io/badge/-RaspberryPi-222222?style=for-the-badge&logo=Raspberry-Pi&logoColor=EEEEEE" width="100%"> |       <img src="https://img.shields.io/badge/python-222222?style=for-the-badge&logo=python&logoColor=EEEEEE" width="100%">       |
+|      <a href="https://paypal.me/cjwisse?country.x=AU&locale.x=en_AU"><img src="https://img.shields.io/badge/PayPal-222222?style=for-the-badge&logo=paypal&logoColor=EEEEEE" width="100%"></a>      |       <img src="https://img.shields.io/badge/Debian-222222?style=for-the-badge&logo=debian&logoColor=EEEEEE" width="100%">       | <img src="https://img.shields.io/badge/shell_script-222222.svg?style=for-the-badge&logo=gnu-bash&logoColor=EEEEEE" width="100%"> |
+|                                                                                                                                                                                                    |          <img src="https://img.shields.io/badge/npm-222222?style=for-the-badge&logo=npm&logoColor=EEEEEE" width="100%">          |   <img src="https://img.shields.io/badge/JavaScript-222222?style=for-the-badge&logo=javascript&logoColor=EEEEEE" width="100%">   |
+|                                                                                                                                                                                                    |      <img src="https://img.shields.io/badge/node.js-222222?style=for-the-badge&logo=node.js&logoColor=EEEEEE" width="100%">      |          <img src="https://img.shields.io/badge/php-222222?style=for-the-badge&logo=php&logoColor=EEEEEE" width="100%">          |
+|                                                                                                                                                                                                    |       <img src="https://img.shields.io/badge/sqlite-222222?style=for-the-badge&logo=sqlite&logoColor=EEEEEE" width="100%">       |        <img src="https://img.shields.io/badge/html5-222222?style=for-the-badge&logo=html5&logoColor=EEEEEE" width="100%">        |
+|                                                                                                                                                                                                    |          <img src="https://img.shields.io/badge/pm2-222222?style=for-the-badge&logo=pm2&logoColor=EEEEEE" width="100%">          |         <img src="https://img.shields.io/badge/css3-222222?style=for-the-badge&logo=css3&logoColor=EEEEEE" width="100%">         |
 </div>
 
 <br>
@@ -35,9 +38,9 @@
 <br>
 
 ## Modules
-* `sentinelCore` - A custom PI-Hole configuration
-* `sentinelLists` - A supermassive collection of curated **domains (8,849,669)** and **regexs (1,186)** lists
+* `sentinelLists` - A supermassive collection of curated **domain (12,717,020)**, **regex (1,177)** and **adblock (1,138,465)** lists
 * `sentinelUnbound` - A custom Unbound configuration
+* `sentinelCore` - A custom PI-Hole configuration
 * `sentinelAlert` - A custom DHCP Managment and Alerting system
 * `sentinelGuard` - A custom VPN (WireGuard) configuration with Web UI for easy management
 
@@ -49,6 +52,7 @@
 * Loads Sentinel Lists
 * Configures Static IP
 * Configures Firewall
+* **Web UI for Pi-Hole, Unbound, WireGuard and PiAlert**
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -73,11 +77,11 @@ Finally, Sentinel also comes with a fully configured VPN (WireGuard) that you ca
 * Deny browser based crypto miners
 * Deny malware
 * Deny agency snooping (CIA, FBI, NSA, etc.)
-* Deny all adult sites
+* Deny adult sites
 * Deny constant social network callouts
 * Deny autodiscover leaks
 * Deny AMP sites
-* Protect yourself against malware, adware and spyware
+* Protect yourself against malware, adware and spyware (AKA: badware)
 * Speed up network using a caching DNS resolver
 * Get remote access into your network using a VPN
 * Control and monitor your network using a DHCP management and alerting system
@@ -151,8 +155,6 @@ If you have a suggestion that would make this better, please fork the repo and c
 If there are any issues please raise an issue on the issue tab and I will look into it.
 
 If there is an issue with the lists please go to the [sentinel-lists](https://github.com/carlowisse/sentinel-lists) repository and raise an issue there.
-
-<br>
 
 ## License
 Distributed under the MIT License. See [LICENSE](LICENSE.txt) for more information.
