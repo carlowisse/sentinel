@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "This will purge all lists from your Sentinel"
+echo "This will purge all lists from your sentinel"
 read -p "Are you sure? (y/n): " reply
 
 if [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
-    echo "Purging..."
+    echo "sentinelPurge initiated..."
 
     pihole --regex --nuke
     pihole --white-regex --nuke
@@ -28,6 +28,6 @@ if [ "$reply" = "y" ] || [ "$reply" = "Y" ]; then
     echo ""
     echo "Sentinel purged."
 else
-    echo "Sentinel standing down..."
+    echo "sentinelPurge standing down..."
     exit 1
 fi
