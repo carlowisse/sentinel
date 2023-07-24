@@ -24,7 +24,8 @@ echo "PREPARING ENVIRONMENT"
 GUARD_PORT=$(get_input "Enter WireGuard Port")
 GUARD_FRONT_PORT=$(get_input "Enter WireGuard Frontend Port")
 GUARD_PASSWORD=$(get_input "Enter WireGuard Frontend Password")
-UNBOUND_FRONT_PORT=$(get_input "Enter Unbound Frontend Port")
+UNBOUND_FRONT_PORT=$(get_input "Enter sentinelUnbound Frontend Port")
+ALERT_PASSWORD=$(get_input "Enter sentinelAlert Frontend Password")
 TIMEZONE=$(get_input "Enter Timezone (e.g. Australia/Sydney)")
 PIHOLE_PASSWORD=$(get_input "Enter PiHole Frontend Password")
 
@@ -52,6 +53,12 @@ update_env_file "GUARD_HOST" "$PIIP"
 update_env_file "GUARD_PORT" "$GUARD_PORT"
 update_env_file "GUARD_FRONT_PORT" "$GUARD_FRONT_PORT"
 update_env_file "GUARD_PASSWORD" "$GUARD_PASSWORD"
+
+## UNBOUND
+update_env_file "UNBOUND_FRONT_PORT" "$UNBOUND_FRONT_PORT"
+
+## ALERT
+update_env_file "ALERT_PASSWORD" "$ALERT_PASSWORD"
 
 print_line
 
@@ -246,6 +253,32 @@ pm2 start sentinel-unbound.js --name sentinel-unbound
 startup_output=$(pm2 startup)
 command=$(echo "$startup_output" | grep -o 'env PATH=.*')
 eval $command
+
+print_line
+
+########## SENTINEL GUARD ##########
+# INSTALL UNBOUND FRONTEND
+cd $SENTINEL_PATH/guard
+npm install
+
+# START UNBOUND FRONTEND
+pm2 start server.js --name sentinel-guard
+
+print_line
+
+########## SENTINEL ALERT ##########
+echo "Configuring sentinelAlert..."
+curl -sSL https://raw.githubusercontent.com/carlowisse/sentinel-alert/main/install/pialert_install.sh | bash
+
+cd ~/pialert/back
+
+./pialert-cli set_password $ALERT_PASSWORD
+
+print_line
+
+########## PM2 ##########
+echo "Configuring PM2..."
+pm2 save
 
 print_line
 
