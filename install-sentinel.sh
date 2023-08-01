@@ -145,7 +145,7 @@ echo "Preparing Sentinel..."
 
 # GET SENTINEL
 cd /home/$SUDO_USER
-git clone https://github.com/carlowisse/sentinel.git
+# git clone https://github.com/carlowisse/sentinel.git
 
 # PREPARE SENTINEL SCRIPTS
 cd $SENTINEL_PATH/scripts/
