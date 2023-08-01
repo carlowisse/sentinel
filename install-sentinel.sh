@@ -20,8 +20,25 @@ update_env_file() {
 ########## ENVIRONMENT ##########
 echo "PREPARING ENVIRONMENT"
 
+# UPDATE SYSTEM
+apt-get update -y
+apt-get upgrade -y
+apt dist-upgrade -y
+
+# CLEAN UP SYSTEM
+apt-get autoremove -y
+apt-get autoclean -y
+apt-get clean -y
+
+# INSTALL DEPENDENCIES
+apt install git python3 python3-pip sqlite3 iptables-persistent wireguard-tools ufw -y
+
+# GET SENTINEL
+cd /home/$SUDO_USER
+# git clone https://github.com/carlowisse/sentinel.git
+cd /home/$SUDO_USER/sentinel
+
 # GET CUSTOM INPUT FROM USER
-GUARD_PORT=$(get_input "Enter WireGuard Port")
 GUARD_FRONT_PORT=$(get_input "Enter WireGuard Frontend Port")
 GUARD_PASSWORD=$(get_input "Enter WireGuard Frontend Password")
 UNBOUND_FRONT_PORT=$(get_input "Enter sentinelUnbound Frontend Port")
@@ -30,6 +47,7 @@ TIMEZONE=$(get_input "Enter Timezone (e.g. Australia/Sydney)")
 PIHOLE_PASSWORD=$(get_input "Enter PiHole Frontend Password")
 
 # STATIC VARIABLES
+GUARD_PORT=51820
 SENTINEL_PATH="/home/$SUDO_USER/sentinel"
 ENV_FILE="./test_env.conf"
 ROUTERIP=$(ip route show | grep -i 'default via' | awk '{print $3 }')
@@ -68,14 +86,6 @@ echo "Configuring System..."
 # SET TIMEZONE
 timedatectl set-timezone $TIMEZONE
 
-# UPDATE SYSTEM
-apt-get update -y
-apt-get upgrade -y
-apt dist-upgrade -y
-
-# INSTALL DEPENDENCIES
-apt install git python3 python3-pip sqlite3 iptables-persistent wireguard-tools ufw -y
-
 # INSTALL NODE AND NPM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -86,13 +96,8 @@ npm install pm2@latest -g
 ln -s $(nvm which node) /usr/sbin/node
 ln -s "$(dirname "$(nvm which node)")/pm2" /usr/sbin/pm2
 
-# CLEAN UP SYSTEM
-apt-get autoremove -y
-apt-get autoclean -y
-apt-get clean -y
-
 # SECURE SYSTEM
-touch /home/access/.hushlogin
+touch /home/$SUDO_USER/.hushlogin
 echo "dtoverlay=disable-wifi" | tee -a /boot/config.txt >/dev/null
 echo "dtoverlay=disable-bt" | tee -a /boot/config.txt >/dev/null
 
@@ -132,6 +137,7 @@ ufw default deny incoming
 ufw default allow outgoing
 ufw allow 22
 ufw allow 80
+ufw allow 5000
 ufw allow $GUARD_PORT
 ufw allow $GUARD_FRONT_PORT
 ufw allow $UNBOUND_FRONT_PORT
@@ -143,17 +149,13 @@ print_line
 ########## PREPARE SENTINEL ##########
 echo "Preparing Sentinel..."
 
-# GET SENTINEL
-cd /home/$SUDO_USER
-# git clone https://github.com/carlowisse/sentinel.git
-
 # PREPARE SENTINEL SCRIPTS
 cd $SENTINEL_PATH/scripts/
 chmod +x ./tools/sentinel-check.sh
 chmod +x ./load-lists.sh
 chmod +x ./apply-white-list.sh
 chmod +x ./apply-white-regex-list.sh
-chmod +x ./apply-regex-list.sh
+chmod +x ./apply-black-regex-list.sh
 
 print_line
 
