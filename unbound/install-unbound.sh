@@ -14,23 +14,5 @@ sudo systemctl restart dhcpcd
 sudo systemctl restart unbound
 sudo echo "edns-packet-max=1232" | sudo tee -a /etc/dnsmasq.d/99-edns.conf
 
-echo "Installing node and npm..."
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-source ~/.bashrc
-nvm install node
-
-echo "Installing Unbound Frontend..."
-
-cd $HOME/SENTINEL/sentinel-unbound
-npm install
-npm install -g pm2
-pm2 start sentinel-unbound.js --name sentinel-unbound
-
-echo "Enforcing PM2 to start on boot..."
-
-startup_output=$(pm2 startup)
-command=$(echo "$startup_output" | grep -o 'sudo env PATH=.*')
-eval $command
 
 exit

@@ -31,7 +31,7 @@ apt-get autoclean -y
 apt-get clean -y
 
 # INSTALL DEPENDENCIES
-apt install git python3 python3-pip sqlite3 iptables-persistent wireguard-tools ufw -y
+apt install git python3 python3-pip sqlite3 iptables-persistent ufw -y
 
 # GET SENTINEL
 cd /home/$SUDO_USER
@@ -39,25 +39,17 @@ cd /home/$SUDO_USER
 cd /home/$SUDO_USER/sentinel
 
 # GET CUSTOM INPUT FROM USER
-GUARD_FRONT_PORT=$(get_input "Enter WireGuard Frontend Port")
-GUARD_PASSWORD=$(get_input "Enter WireGuard Frontend Password")
-UNBOUND_FRONT_PORT=$(get_input "Enter sentinelUnbound Frontend Port")
-ALERT_PASSWORD=$(get_input "Enter sentinelAlert Frontend Password")
 TIMEZONE=$(get_input "Enter Timezone (e.g. Australia/Sydney)")
 PIHOLE_PASSWORD=$(get_input "Enter PiHole Frontend Password")
 
 # STATIC VARIABLES
-GUARD_PORT=51820
 SENTINEL_PATH="/home/$SUDO_USER/sentinel"
-ENV_FILE="./test_env.conf"
+ENV_FILE="./env.conf"
 ROUTERIP=$(ip route show | grep -i 'default via' | awk '{print $3 }')
 PIIP=$(hostname -I | tr -d ' ')
 
 # CLEAR THE ENV FILE
 echo "" >$ENV_FILE
-
-# ADD BASE_ENV.CONF TO ENV FILE
-cat ./base_env.conf >>$ENV_FILE
 
 # UPDATE THE ENV FILE WITH THE NEW ENTRIES
 ## CORE
@@ -66,18 +58,6 @@ update_env_file "PIIP" "$PIIP"
 update_env_file "PIHOLE_PASSWORD" "$PIHOLE_PASSWORD"
 update_env_file "TIMEZONE" "$TIMEZONE"
 
-## GUARD
-update_env_file "GUARD_HOST" "$PIIP"
-update_env_file "GUARD_PORT" "$GUARD_PORT"
-update_env_file "GUARD_FRONT_PORT" "$GUARD_FRONT_PORT"
-update_env_file "GUARD_PASSWORD" "$GUARD_PASSWORD"
-
-## UNBOUND
-update_env_file "UNBOUND_FRONT_PORT" "$UNBOUND_FRONT_PORT"
-
-## ALERT
-update_env_file "ALERT_PASSWORD" "$ALERT_PASSWORD"
-
 print_line
 
 ########## CONFIGURE SYSTEM ##########
@@ -85,16 +65,6 @@ echo "Configuring System..."
 
 # SET TIMEZONE
 timedatectl set-timezone $TIMEZONE
-
-# INSTALL NODE AND NPM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-nvm install node
-npm install -g npm@latest
-npm install pm2@latest -g
-ln -s $(nvm which node) /usr/sbin/node
-ln -s "$(dirname "$(nvm which node)")/pm2" /usr/sbin/pm2
 
 # SECURE SYSTEM
 touch /home/$SUDO_USER/.hushlogin
@@ -137,10 +107,6 @@ ufw default deny incoming
 ufw default allow outgoing
 ufw allow 22
 ufw allow 80
-ufw allow 5000
-ufw allow $GUARD_PORT
-ufw allow $GUARD_FRONT_PORT
-ufw allow $UNBOUND_FRONT_PORT
 
 systemctl restart ufw
 
@@ -193,34 +159,7 @@ curl -L https://install.pi-hole.net | bash /dev/stdin --unattended
 # UPDATE PI-HOLE PASSWORD
 pihole -a -p $PIHOLE_PASSWORD
 
-# CLEAN UP PI-HOLE
-pihole --regex --nuke
-pihole --white-regex --nuke
-pihole -w --nuke
-pihole -b --nuke
-sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"
-
 print_line
-
-########## LOADING SENTINEL LISTS ##########
-echo "Loading Sentinel Lists..."
-
-# LOAD LISTS
-./load-lists.sh
-pihole -g
-
-# GET COUNT OF DOMAINS IN GRAVITY DB
-UNCLEAN_COUNT=$(sqlite3 /etc/pihole/gravity.db "SELECT COUNT(*) FROM gravity;")
-
-# CLEAN UP GRAVITY DB
-sqlite3 /etc/pihole/gravity.db "DELETE FROM gravity WHERE rowid NOT IN (SELECT rowid FROM gravity GROUP BY domain); VACUUM;"
-
-# GET COUNT OF DOMAINS IN GRAVITY DB
-CLEAN_COUNT=$(sqlite3 /etc/pihole/gravity.db "SELECT COUNT(*) FROM gravity;")
-
-echo "Domains Uncleaned: $UNCLEAN_COUNT"
-echo "Domains Cleaned: $CLEAN_COUNT"
-echo "Domains Removed: $(($UNCLEAN_COUNT - $CLEAN_COUNT))"
 
 # PI-HOLE MAINTENANCE
 pihole restartdns reload
@@ -230,7 +169,7 @@ pihole flush
 print_line
 
 ########## UNBOUND ##########
-echo "Configuring sentinelUnbound..."
+echo "Configuring Unbound..."
 
 systemctl disable systemd-resolved
 apt install unbound -y
@@ -243,44 +182,6 @@ sed -i -n '/unbound/!p' /etc/resolvconf.conf
 systemctl restart dhcpcd
 systemctl restart unbound
 echo "edns-packet-max=1232" | tee -a /etc/dnsmasq.d/99-edns.conf
-
-# INSTALL UNBOUND FRONTEND
-cd $SENTINEL_PATH/unbound
-npm install
-
-# START UNBOUND FRONTEND
-pm2 start sentinel-unbound.js --name sentinel-unbound
-
-# ENFORCE PM2 TO START ON BOOT
-startup_output=$(pm2 startup)
-command=$(echo "$startup_output" | grep -o 'env PATH=.*')
-eval $command
-
-print_line
-
-########## SENTINEL GUARD ##########
-# INSTALL UNBOUND FRONTEND
-cd $SENTINEL_PATH/guard
-npm install
-
-# START UNBOUND FRONTEND
-pm2 start server.js --name sentinel-guard
-
-print_line
-
-########## SENTINEL ALERT ##########
-echo "Configuring sentinelAlert..."
-curl -sSL https://raw.githubusercontent.com/carlowisse/sentinel-alert/main/install/pialert_install.sh | bash
-
-cd ~/pialert/back
-
-./pialert-cli set_password $ALERT_PASSWORD
-
-print_line
-
-########## PM2 ##########
-echo "Configuring PM2..."
-pm2 save
 
 print_line
 
@@ -298,10 +199,8 @@ print_line
 
 ########## PRINT DETAILS ##########
 echo "Access Details:"
-echo "sentinelCore: http://$PIIP/admin"
-echo "sentinelAlert: http://$PIIP:5000"
-echo "sentinelGuard: http://$PIIP:$GUARD_FRONT_PORT"
-echo "sentinelUnbound: http://$PIIP:5002"
+echo "Web Portal: http://$PIIP/admin"
+echo "Password: $PIHOLE_PASSWORD"
 
 print_line
 
