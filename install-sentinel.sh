@@ -14,7 +14,7 @@ get_input() {
 
 # FUNCTION TO UPDATE THE ENV FILE
 update_env_file() {
-    echo "$1='$2'" >>$ENV_FILE
+    echo "$1='$2'" >>$SENTINEL_CONF
 }
 
 ########## ENVIRONMENT ##########
@@ -44,12 +44,12 @@ PIHOLE_PASSWORD=$(get_input "Enter PiHole Frontend Password")
 
 # STATIC VARIABLES
 SENTINEL_PATH="/home/$SUDO_USER/sentinel"
-ENV_FILE="./env.conf"
+SENTINEL_CONF="./env.conf"
 ROUTERIP=$(ip route show | grep -i 'default via' | awk '{print $3 }')
 PIIP=$(hostname -I | tr -d ' ')
 
 # CLEAR THE ENV FILE
-echo "" >$ENV_FILE
+echo "" >$SENTINEL_CONF
 
 # UPDATE THE ENV FILE WITH THE NEW ENTRIES
 ## CORE
@@ -118,10 +118,6 @@ echo "Preparing Sentinel..."
 # PREPARE SENTINEL SCRIPTS
 cd $SENTINEL_PATH/scripts/
 chmod +x ./tools/sentinel-check.sh
-chmod +x ./load-lists.sh
-chmod +x ./apply-white-list.sh
-chmod +x ./apply-white-regex-list.sh
-chmod +x ./apply-black-regex-list.sh
 
 print_line
 
