@@ -9,3 +9,5 @@ while IFS= read -r LINE; do
 
     sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled, comment) VALUES ('$ADDRESS', 1, '$COMMENT');"
 done <"$FILE"
+
+pihole -g
