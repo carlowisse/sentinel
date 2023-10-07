@@ -1,0 +1,3 @@
+[a-z]\.thumbs\.redditmedia\.com
+(\.|^)redd\.it$
+(\.|^)reddit\.com$

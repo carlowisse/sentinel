@@ -1,0 +1,5 @@
+itunes.apple.com
+s.mzstatic.com
+appleid.apple.com
+gsp-ssl.ls.apple.com
+gsp-ssl.ls-apple.com.akadns.net

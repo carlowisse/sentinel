@@ -1,3 +1,0 @@
-https://raw.githubusercontent.com/nextdns/click-tracking-domains/main/domains
-https://raw.githubusercontent.com/dnswarden/blocklist-staging/main/whitelist/whitelistcommon.txt
-https://raw.githubusercontent.com/dnswarden/blocklist-staging/main/whitelist/tinylist.txt

@@ -1,0 +1,4 @@
+twitter.com
+upload.twitter.com
+api.twitter.com
+mobile.twitter.com

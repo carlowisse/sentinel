@@ -1,2 +1,11 @@
-https://raw.githubusercontent.com/dnswarden/blocklist-staging/main/whitelist/whitelistcommon.txt
-https://raw.githubusercontent.com/dnswarden/blocklist-staging/main/whitelist/tinylist.txt
+connectivitycheck.android.com
+android.clients.google.com
+clients3.google.com
+connectivitycheck.gstatic.com
+msftncsi.com
+www.msftncsi.com
+ipv6.msftncsi.com
+captive.apple.com
+gsp1.apple.com
+www.apple.com
+www.appleiphonecell.com

@@ -1,0 +1,3 @@
+spclient.wg.spotify.com
+apresolve.spotify.com
+api-tv.spotify.com
