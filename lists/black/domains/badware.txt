@@ -1,6 +1,4 @@
 https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.txt
-https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.medium.txt
-https://raw.githubusercontent.com/hagezi/dns-blocklists/main/domains/tif.light.txt
 https://phishing.army/download/phishing_army_blocklist.txt
 https://gitlab.com/quidsup/notrack-blocklists/-/raw/master/malware.list
 https://raw.githubusercontent.com/olbat/ut1-blacklists/master/blacklists/malware/domains
