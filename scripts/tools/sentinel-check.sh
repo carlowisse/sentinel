@@ -4,7 +4,7 @@ print_line() {
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 }
 
-echo "Sentinel Core:"
+echo "Sentinel:"
 print_line
 
 cd
@@ -22,7 +22,7 @@ fi
 
 echo ""
 
-echo "Sentinel Unbound:"
+echo "Unbound:"
 print_line
 
 if dig sigfail.verteiltesysteme.net @127.0.0.1 -p 5335 | grep -q 'SERVFAIL'; then
@@ -43,7 +43,7 @@ fi
 
 echo ""
 
-echo "Sentinel Pi-Hole:"
+echo "Pi-Hole:"
 print_line
 
 if ps aux | grep -q 'pihole'; then
