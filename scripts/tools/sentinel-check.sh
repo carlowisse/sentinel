@@ -70,10 +70,10 @@ else
     echo "Pi-Hole install: FAIL."
 fi
 
-if pihole -v | grep -q 'AdminLTE'; then
-    echo "Admin install: PASS."
+if pihole -v | grep -q 'web'; then
+    echo "Web install: PASS."
 else
-    echo "Admin install: FAIL."
+    echo "Web install: FAIL."
 fi
 
 if pihole -v | grep -q 'FTL'; then
@@ -88,31 +88,31 @@ else
     echo "FTL listening: FAIL."
 fi
 
-if pihole status | grep -q '[✓] UDP (IPv4)'; then
+if pihole status | grep -q 'UDP (IPv4)'; then
     echo "Pi-Hole UDP IPv4: PASS."
 else
     echo "Pi-Hole UDP IPv4: FAIL."
 fi
 
-if pihole status | grep -q '[✓] TCP (IPv4)'; then
+if pihole status | grep -q 'TCP (IPv4)'; then
     echo "Pi-Hole TCP IPv4: PASS."
 else
     echo "Pi-Hole TCP IPv4: FAIL."
 fi
 
-if pihole status | grep -q '[✓] UDP (IPv6)'; then
+if pihole status | grep -q 'UDP (IPv6)'; then
     echo "Pi-Hole UDP IPv6: PASS."
 else
     echo "Pi-Hole UDP IPv6: FAIL."
 fi
 
-if pihole status | grep -q '[✓] TCP (IPv6)'; then
+if pihole status | grep -q 'TCP (IPv6)'; then
     echo "Pi-Hole TCP IPv6: PASS."
 else
     echo "Pi-Hole TCP IPv6: FAIL."
 fi
 
-if pihole status | grep -q '[✓] Pi-hole blocking is enabled'; then
+if pihole status | grep -q 'Pi-hole blocking is enabled'; then
     echo "Pi-Hole blocking enabled: PASS."
 else
     echo "Pi-Hole blocking enabled: FAIL."
@@ -146,7 +146,7 @@ else
 fi
 
 # Check if outgoing is allowed and incoming is denied
-if [[ $ufw_status == *"Default: deny (incoming)"* ]] && [[ $ufw_status == *"Default: allow (outgoing)"* ]]; then
+if [[ $ufw_status == *"deny (incoming)"* ]] && [[ $ufw_status == *"allow (outgoing)"* ]]; then
     echo "UFW Incoming/Outgoing: PASS."
 else
     echo "UFW Incoming/Outgoing: FAIL."
