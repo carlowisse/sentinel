@@ -148,17 +148,13 @@ print_line
 ########## UNBOUND ##########
 echo "Configuring Unbound..."
 
-systemctl disable systemd-resolved
 apt install unbound -y
 ln -s $SENTINEL_PATH/unbound/sentinel-unbound.conf /etc/unbound/unbound.conf.d/
-systemctl disable unbound-resolvconf.service
-systemctl stop unbound-resolvconf.service
-unbound-anchor
+systemctl disable --now unbound-resolvconf.service
+sed -Ei 's/^unbound_conf=/#unbound_conf=/' /etc/resolvconf.conf
 rm /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
-sed -i -n '/unbound/!p' /etc/resolvconf.conf
-systemctl restart dhcpcd
-systemctl restart unbound
 echo "edns-packet-max=1232" | tee -a /etc/dnsmasq.d/99-edns.conf
+systemctl restart unbound
 
 print_line
 
