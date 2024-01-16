@@ -31,7 +31,7 @@ apt-get autoclean -y
 apt-get clean -y
 
 # INSTALL DEPENDENCIES
-apt install git python3 python3-pip sqlite3 iptables-persistent ufw -y
+apt install git python3 python3-pip sqlite3 ufw -y
 
 # GET SENTINEL
 cd /home/$SUDO_USER
@@ -79,25 +79,6 @@ static ip_address=$PIIP/24
 static routers=$ROUTERIP
 static domain_name_servers=$ROUTERIP
 EOT
-
-# CONFIGURE IPTABLES
-debconf-set-selections <<EOT
-iptables-persistent iptables-persistent/autosave_v4 boolean true
-iptables-persistent iptables-persistent/autosave_v6 boolean true
-EOT
-
-iptables -F
-
-iptables -A INPUT -p tcp --dport 443 -j REJECT --reject-with tcp-reset
-iptables -A INPUT -p udp --dport 80 -j REJECT --reject-with icmp-port-unreachable
-iptables -A INPUT -p udp --dport 443 -j REJECT --reject-with icmp-port-unreachable
-
-ip6tables -A INPUT -p tcp --dport 443 -j REJECT --reject-with tcp-reset
-ip6tables -A INPUT -p udp --dport 80 -j REJECT --reject-with icmp6-port-unreachable
-ip6tables -A INPUT -p udp --dport 443 -j REJECT --reject-with icmp6-port-unreachable
-
-sh -c "iptables-save > /etc/iptables/rules.v4"
-sh -c "ip6tables-save > /etc/iptables/rules.v6"
 
 # CONFIGURE UFW
 ufw --force enable

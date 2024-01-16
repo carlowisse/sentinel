@@ -4,115 +4,54 @@ print_line() {
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
 }
 
+check() {
+    if eval "$1"; then
+        echo "$2: Pass."
+    else
+        echo "$2: FAIL."
+    fi
+}
+
 echo "Sentinel:"
 print_line
 
-cd
-if ls | grep -q 'sentinel'; then
-    echo "Sentinel install: Pass."
-fi
-
-if pihole -c -e | grep -q 'Hostname: sentinel'; then
-    echo "Sentinel stats: Pass."
-fi
-
-if hostname | grep -q 'sentinel'; then
-    echo "Sentinel hostname: Pass."
-fi
+check "ls | grep -q 'sentinel'" "Sentinel install"
+check "pihole -c -e | grep -q 'Hostname: sentinel'" "Sentinel stats"
+check "hostname | grep -q 'sentinel'" "Sentinel hostname"
 
 echo ""
-
 echo "Unbound:"
 print_line
 
-if dig sigfail.verteiltesysteme.net @127.0.0.1 -p 5335 | grep -q 'SERVFAIL'; then
-    echo "DNSSEC reject: Pass."
-fi
-
-if dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335 | grep -q 'NOERROR'; then
-    echo "DNSSEC accept: Pass."
-fi
-
-if ps aux | grep -q 'unbound'; then
-    echo "Unbound process: Pass."
-fi
-
-if unbound-checkconf | grep -q 'no errors'; then
-    echo "Unbound configuration: Pass."
-fi
+check "dig sigfail.verteiltesysteme.net @127.0.0.1 -p 5335 | grep -q 'SERVFAIL'" "DNSSEC reject"
+check "dig sigok.verteiltesysteme.net @127.0.0.1 -p 5335 | grep -q 'NOERROR'" "DNSSEC accept"
+check "ps aux | grep -v grep | grep -q 'unbound'" "Unbound process"
+check "unbound-checkconf | grep -q 'no errors'" "Unbound configuration"
 
 echo ""
-
 echo "Pi-Hole:"
 print_line
 
-if ps aux | grep -q 'pihole'; then
-    echo "Pi-Hole process: Pass."
-fi
-
-if pihole -v | grep -q 'Pi-hole'; then
-    echo "Pi-Hole install: Pass."
-fi
-
-if pihole -v | grep -q 'AdminLTE'; then
-    echo "Admin install: Pass."
-fi
-
-if pihole -v | grep -q 'FTL'; then
-    echo "FTL install: Pass."
-fi
-
-if pihole status | grep -q 'FTL is listening'; then
-    echo "FTL listening: Pass."
-fi
-
-if pihole status | grep -q '[✓] UDP (IPv4)'; then
-    echo "Pi-Hole UDP IPv4: Pass."
-fi
-
-if pihole status | grep -q '[✓] TCP (IPv4)'; then
-    echo "Pi-Hole TCP IPv4: Pass."
-fi
-
-if pihole status | grep -q '[✓] UDP (IPv6)'; then
-    echo "Pi-Hole UDP IPv6: Pass."
-fi
-
-if pihole status | grep -q '[✓] TCP (IPv6)'; then
-    echo "Pi-Hole TCP IPv6: Pass."
-fi
-
-if pihole status | grep -q '[✓] Pi-hole blocking is enabled'; then
-    echo "Pi-Hole blocking enabled: Pass."
-fi
+check "ps aux | grep -v grep | grep -q 'pihole'" "Pi-Hole process"
+check "pihole -v | grep -q 'Pi-hole'" "Pi-Hole install"
+check "pihole -v | grep -q 'AdminLTE'" "Admin install"
+check "pihole -v | grep -q 'FTL'" "FTL install"
+check "pihole status | grep -q 'FTL is listening'" "FTL listening"
+check "pihole status | grep -q '[✓] UDP (IPv4)'" "Pi-Hole UDP IPv4"
+check "pihole status | grep -q '[✓] TCP (IPv4)'" "Pi-Hole TCP IPv4"
+check "pihole status | grep -q '[✓] UDP (IPv6)'" "Pi-Hole UDP IPv6"
+check "pihole status | grep -q '[✓] TCP (IPv6)'" "Pi-Hole TCP IPv6"
+check "pihole status | grep -q '[✓] Pi-hole blocking is enabled'" "Pi-Hole blocking enabled"
 
 echo ""
-
-echo "IPTables:"
+echo "UFW:"
 print_line
 
-if sudo iptables -S | grep -q -e '-P INPUT ACCEPT'; then
-    echo "INPUT ACCEPT: Pass."
-fi
+ufw_status=$(sudo ufw status verbose)
 
-if sudo iptables -S | grep -q -e '-P FORWARD ACCEPT'; then
-    echo "FORWARD ACCEPT: Pass."
-fi
-
-if sudo iptables -S | grep -q -e '-P OUTPUT ACCEPT'; then
-    echo "OUTPUT ACCEPT: Pass."
-fi
-
-if sudo iptables -S | grep -q -e '-A INPUT -p tcp -m tcp --dport 443 -j REJECT --reject-with tcp-reset'; then
-    echo "TCP 443 REJECT: Pass."
-fi
-
-if sudo iptables -S | grep -q -e '-A INPUT -p udp -m udp --dport 80 -j REJECT --reject-with icmp-port-unreachable'; then
-    echo "UDP 80 REJECT: Pass."
-fi
-
-if sudo iptables -S | grep -q -e '-A INPUT -p udp -m udp --dport 443 -j REJECT --reject-with icmp-port-unreachable'; then
-    echo "UDP 443 REJECT: Pass."
-fi
+check "[[ $ufw_status == *'Status: active'* ]]" "UFW Running"
+check "sudo netstat -tuln | grep -q ':80 ' && sudo netstat -tuln | grep -q ':22 '" "UFW Ports"
+check "[[ $ufw_status == *'Status: active'* ]]" "UFW Enabled"
+check "[[ $ufw_status == *'Default: deny (incoming)'* ]] && [[ $ufw_status == *'Default: allow (outgoing)'* ]]" "UFW Incoming/Outgoing"
 
 exit
