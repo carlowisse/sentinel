@@ -8,6 +8,12 @@ else
     echo -e "\e[31mSentinel install: FAIL.\e[0m"
 fi
 
+if pihole -c -e | grep -q 'Hostname: sentinel'; then
+    echo "Sentinel stats: PASS."
+else
+    echo "\e[31mSentinel stats: FAIL.\e[0m"
+fi
+
 if hostname | grep -q 'sentinel'; then
     echo "Sentinel hostname: PASS."
 else
