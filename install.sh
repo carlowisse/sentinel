@@ -161,7 +161,7 @@ for file in $SENTINEL_PATH/unbound/*.conf; do
 done
 
 systemctl disable --now unbound-resolvconf.service
-sed -Ei 's/^unbound_conf=/#unbound_conf=/' /etc/resolvconf.conf
+sed -Ei 's/^unbound_conf=/#unbound_conf=/' /etc/resolv.conf
 rm /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
 echo "edns-packet-max=1232" | tee -a /etc/dnsmasq.d/99-edns.conf
 
@@ -183,7 +183,7 @@ print_line
 echo "Configuring Stubby..."
 
 rm /etc/stubby/stubby.yml
-ln -s $SENTINEL_PATH/stubby/sentinel-stubby.yml /etc/stubby/stubby.yml
+cp $SENTINEL_PATH/stubby/sentinel-stubby.yml /etc/stubby/stubby.yml
 chmod 644 /etc/stubby/stubby.yml
 
 ### COMMENT OUT line that contains domain_name_servers in /etc/dhcpcd.conf
