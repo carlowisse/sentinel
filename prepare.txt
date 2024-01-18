@@ -1,0 +1,15 @@
+sudo apt update --fix-missing -y
+sudo apt upgrade -y
+sudo apt dist-upgrade -y --allow-downgrades
+sudo apt autoremove --purge -y
+[ -f /var/run/reboot-required ] && cat /var/run/reboot-required
+cd
+touch .hushlogin
+sudo apt install git -y
+git clone https://github.com/carlowisse/sentinel.git
+
+sudo raspi-config
+
+> System Options > Hostname
+> Advanced Options > Expand Filesystem
+> Finish > Reboot

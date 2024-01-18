@@ -120,14 +120,14 @@ LIGHTTPD_ENABLED=true
 CACHE_SIZE=10000
 BLOCKING_ENABLED=true
 WEBPASSWORD=
-DNSMASQ_LISTENING=local
-PIHOLE_DNS_1=127.0.0.1#5335
+DNSMASQ_LISTENING=bind
 DNS_FQDN_REQUIRED=true
 DNS_BOGUS_PRIV=true
 DNSSEC=true
 REV_SERVER=false
 WEBTHEME=default-darker
 WEBUIBOXEDLAYOUT=traditional
+PIHOLE_DNS_1=127.0.0.1#5335
 EOT
 
 # INSTALL PI-HOLE
@@ -182,7 +182,12 @@ print_line
 ########## STUBBY ##########
 echo "Configuring Stubby..."
 
+rm /etc/stubby/stubby.yml
 ln -s $SENTINEL_PATH/stubby/sentinel-stubby.yml /etc/stubby/stubby.yml
+chmod 644 /etc/stubby/stubby.yml
+
+### COMMENT OUT line that contains domain_name_servers in /etc/dhcpcd.conf
+sed -i '/domain_name_servers=/s/^/#/g' /etc/dhcpcd.conf
 
 systemctl restart unbound stubby
 
