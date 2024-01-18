@@ -124,7 +124,7 @@ DNSMASQ_LISTENING=local
 PIHOLE_DNS_1=127.0.0.1#5335
 DNS_FQDN_REQUIRED=true
 DNS_BOGUS_PRIV=true
-DNSSEC=false
+DNSSEC=true
 REV_SERVER=false
 WEBTHEME=default-darker
 WEBUIBOXEDLAYOUT=traditional
@@ -136,6 +136,13 @@ curl -L https://install.pi-hole.net | bash /dev/stdin --unattended
 # UPDATE PI-HOLE PASSWORD
 pihole -a -p $PIHOLE_PASSWORD
 
+# ADD BLOCKINGMODE=NXDOMAIN TO PIHOLE-FTL.CONF IF IT DOESN'T EXIST
+if grep -q "BLOCKINGMODE=NXDOMAIN" /etc/pihole/pihole-FTL.conf; then
+    echo "Blocking Mode already configured"
+else
+    echo "BLOCKINGMODE=NXDOMAIN" >>/etc/pihole/pihole-FTL.conf
+fi
+
 print_line
 
 # PI-HOLE MAINTENANCE
@@ -145,18 +152,36 @@ pihole flush
 
 print_line
 
-########## UNBOUND ##########
+########## UNBOUND AND STUBBY ##########
 echo "Configuring Unbound..."
 
-apt install unbound -y
+apt install unbound stubby -y
 ln -s $SENTINEL_PATH/unbound/sentinel-unbound.conf /etc/unbound/unbound.conf.d/
 systemctl disable --now unbound-resolvconf.service
 sed -Ei 's/^unbound_conf=/#unbound_conf=/' /etc/resolvconf.conf
 rm /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
 echo "edns-packet-max=1232" | tee -a /etc/dnsmasq.d/99-edns.conf
-systemctl restart unbound
+
+mkdir -p /var/log/unbound
+touch /var/log/unbound/unbound.log
+chown unbound /var/log/unbound/unbound.log
+
+if grep -q "var/log/unbound/unbound.log rw," /etc/apparmor.d/local/usr.sbin.unbound; then
+    echo "AppArmor already configured for unbound"
+else
+    echo "/var/log/unbound/unbound.log rw," >>/etc/apparmor.d/local/usr.sbin.unbound
+    apparmor_parser -r /etc/apparmor.d/usr.sbin.unbound
+    service apparmor restart
+fi
 
 print_line
+
+########## STUBBY ##########
+echo "Configuring Stubby..."
+
+ln -s $SENTINEL_PATH/stubby/sentinel-stubby.yml /etc/stubby/stubby.yml
+
+systemctl restart unbound stubby
 
 ########## CLEAN UP INSTALL ##########
 # CLEAN UP HISTORY

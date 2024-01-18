@@ -1,12 +1,6 @@
 #!/bin/bash
 
-print_line() {
-    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
-}
-
-echo "Sentinel:"
-print_line
-
+### SENTINEL CHECK ###
 cd
 if ls | grep -q 'sentinel'; then
     echo "Sentinel install: PASS."
@@ -26,10 +20,29 @@ else
     echo "Sentinel hostname: FAIL."
 fi
 
-echo ""
-echo "Unbound:"
-print_line
+### DNS CHECK ###
+# UNBOUND
+if dig pi-hole.net @127.0.0.1 -p 5335 | grep -q 'NXDOMAIN'; then
+    echo "Unbound DNS: PASS."
+else
+    echo "Unbound DNS: FAIL."
+fi
 
+# STUBBY
+if dig pi-hole.net @127.0.0.1 -p 8053 | grep -q 'NXDOMAIN'; then
+    echo "Stubby DNS: PASS."
+else
+    echo "Stubby DNS: FAIL."
+fi
+
+# FTLDNS
+if dig pi-hole.net @127.0.0.1 -p 53 | grep -q 'NXDOMAIN'; then
+    echo "FTLDNS DNS: PASS."
+else
+    echo "FTLDNS DNS: FAIL."
+fi
+
+# DNSSEC
 if dig sigfail.verteiltesysteme.net @127.0.0.1 -p 5335 | grep -q 'SERVFAIL'; then
     echo "DNSSEC reject: PASS."
 else
@@ -42,6 +55,7 @@ else
     echo "DNSSEC accept: FAIL."
 fi
 
+### UNBOUND CHECK ###
 if ps aux | grep -q 'unbound'; then
     echo "Unbound process: PASS."
 else
@@ -54,10 +68,7 @@ else
     echo "Unbound configuration: FAIL."
 fi
 
-echo ""
-echo "Pi-Hole:"
-print_line
-
+### PI-HOLE CHECK ###
 if ps aux | grep -q 'pihole'; then
     echo "Pi-Hole process: PASS."
 else
@@ -118,11 +129,7 @@ else
     echo "Pi-Hole blocking enabled: FAIL."
 fi
 
-echo ""
-echo "UFW:"
-print_line
-
-# Check if ufw is running
+### UFW CHECK ###
 ufw_status=$(sudo ufw status verbose)
 
 if [[ $ufw_status == *"Status: active"* ]]; then
