@@ -156,8 +156,9 @@ print_line
 echo "Configuring Unbound..."
 
 apt install unbound stubby -y
+
 for file in $SENTINEL_PATH/unbound/*.conf; do
-    ln -s $file /etc/unbound/unbound.conf.d/
+    cp $file /etc/unbound/unbound.conf.d/
 done
 
 systemctl disable --now unbound-resolvconf.service
