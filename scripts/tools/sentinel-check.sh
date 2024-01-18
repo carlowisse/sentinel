@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### SENTINEL CHECK ###
-cd
+cd /home/$SUDO_USER
 if ls | grep -q 'sentinel'; then
     echo "Sentinel install: PASS."
 else
