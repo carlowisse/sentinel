@@ -1,10 +1,13 @@
 #!/bin/bash
 # sudo bash ./apply-all-list.sh
 
-BLACK_FILE=../lists/black/all_domains.txt
-WHITE_FILE=../lists/white/all_domains.txt
+# get argument from command line as variable
 
-echo "Loading blacklists..."
+BLACK_FILE=$1
+BLACK_COUNT=$(wc -l <"$BLACK_FILE")
+
+echo "APPLYING $BLACK_COUNT BLACKLISTS..."
+
 while IFS= read -r BLACK_LINE; do
     BLACK_URL="$BLACK_LINE"
     BLACK_COMMENT=$(basename "$BLACK_LINE")
