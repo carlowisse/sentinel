@@ -1,14 +1,12 @@
 #!/bin/bash
-# sudo bash ./apply-all-list.sh
-
-# get argument from command line as variable
+# sudo bash ./apply-black-list.sh /path/to/file/that/contains/blacklists.txt
 
 BLACK_FILE=$1
 BLACK_COUNT=$(wc -l <"$BLACK_FILE")
 
 echo "APPLYING $BLACK_COUNT BLACKLISTS..."
 
-while IFS= read -r BLACK_LINE; do
+while IFS= read -r BLACK_LINE || [[ -n "$BLACK_LINE" ]]; do
     BLACK_URL="$BLACK_LINE"
     BLACK_COMMENT=$(basename "$BLACK_LINE")
 
