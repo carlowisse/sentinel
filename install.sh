@@ -161,13 +161,9 @@ for file in $SENTINEL_PATH/unbound/*.conf; do
     cp $file /etc/unbound/unbound.conf.d/
 done
 
-if systemctl is-active --quiet unbound-resolvconf.service; then
-    systemctl disable --now unbound-resolvconf.service
-fi
+systemctl disable --now unbound-resolvconf.service
 sed -Ei 's/^unbound_conf=/#unbound_conf=/' /etc/resolv.conf
-if [ -f /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf ]; then
-    rm /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
-fi
+rm /etc/unbound/unbound.conf.d/resolvconf_resolvers.conf
 echo "edns-packet-max=1232" | tee -a /etc/dnsmasq.d/99-edns.conf
 
 mkdir -p /var/log/unbound
