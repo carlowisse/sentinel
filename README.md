@@ -136,6 +136,13 @@ sudo bash install.sh
 
 <br>
 
+## Request Flow
+> FTLDNS > Unbound > Stubby > Quad9 > Stubby > FTLDNS
+1. **FTLDNS** is listening on port `53` to handle all DNS requests
+2. These requests will be then forwarded to **Unbound** for the recursive DNS checking.
+3. To apply the DNS-over-TLS we need then to forward requests from Unbound to **Stubby** that will then forward them to the defined Upstream DNS in the configuration file.
+4. **FTLDNS** will then cache the DNS replies transmitted with DNS-over-TLS from Stubby
+
 ## Contributing
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
