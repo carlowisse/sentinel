@@ -89,6 +89,7 @@ There are also some notes on setting up gravity-sync if you wish to have a redun
   * [domains format](./lists/white/domains)
   * [regex format](./lists/white/regexes)
 * [DNS Providers](./lists/dns-providers.md)
+
 <br>
 
 ## Installation
@@ -152,6 +153,8 @@ If you have a suggestion that would make this better, please fork the repo and c
 
 ## Issues
 If there are any issues please raise an issue on the issue tab and I will look into it.
+
+<br>
 
 ## License
 Distributed under the MIT License. See [LICENSE](LICENSE.txt) for more information.

@@ -97,7 +97,7 @@ print_line
 echo "Preparing Sentinel..."
 
 # PREPARE SENTINEL SCRIPTS
-cd $SENTINEL_PATH/scripts/
+cd $SENTINEL_PATH/
 chmod +x ./tools/sentinel-check.sh
 
 print_line
@@ -200,7 +200,7 @@ print_line
 
 ########## RUN CHECKS ##########
 echo "Running sentinelCheck..."
-bash $SENTINEL_PATH/scripts/tools/sentinel-check.sh
+bash $SENTINEL_PATH/tools/sentinel-check.sh
 
 print_line
 
