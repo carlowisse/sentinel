@@ -1,19 +1,5 @@
 <div id="top"></div>
 
-<div align="center">
-
-|                                                                                               DONATE                                                                                               |                                                               CORE                                                               |                                                            LANGUAGES                                                             |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: |
-| <a href="https://www.buymeacoffee.com/carlowisse"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-222222?style=for-the-badge&logo=buy-me-a-coffee&logoColor=EEEEEE" width="100%"></a> | <img src="https://img.shields.io/badge/-RaspberryPi-222222?style=for-the-badge&logo=Raspberry-Pi&logoColor=EEEEEE" width="100%"> |       <img src="https://img.shields.io/badge/python-222222?style=for-the-badge&logo=python&logoColor=EEEEEE" width="100%">       |
-|      <a href="https://paypal.me/cjwisse?country.x=AU&locale.x=en_AU"><img src="https://img.shields.io/badge/PayPal-222222?style=for-the-badge&logo=paypal&logoColor=EEEEEE" width="100%"></a>      |       <img src="https://img.shields.io/badge/Debian-222222?style=for-the-badge&logo=debian&logoColor=EEEEEE" width="100%">       | <img src="https://img.shields.io/badge/shell_script-222222.svg?style=for-the-badge&logo=gnu-bash&logoColor=EEEEEE" width="100%"> |
-|                                                                                                                                                                                                    |          <img src="https://img.shields.io/badge/npm-222222?style=for-the-badge&logo=npm&logoColor=EEEEEE" width="100%">          |   <img src="https://img.shields.io/badge/JavaScript-222222?style=for-the-badge&logo=javascript&logoColor=EEEEEE" width="100%">   |
-|                                                                                                                                                                                                    |      <img src="https://img.shields.io/badge/node.js-222222?style=for-the-badge&logo=node.js&logoColor=EEEEEE" width="100%">      |          <img src="https://img.shields.io/badge/php-222222?style=for-the-badge&logo=php&logoColor=EEEEEE" width="100%">          |
-|                                                                                                                                                                                                    |       <img src="https://img.shields.io/badge/sqlite-222222?style=for-the-badge&logo=sqlite&logoColor=EEEEEE" width="100%">       |        <img src="https://img.shields.io/badge/html5-222222?style=for-the-badge&logo=html5&logoColor=EEEEEE" width="100%">        |
-|                                                                                                                                                                                                    |          <img src="https://img.shields.io/badge/pm2-222222?style=for-the-badge&logo=pm2&logoColor=EEEEEE" width="100%">          |         <img src="https://img.shields.io/badge/css3-222222?style=for-the-badge&logo=css3&logoColor=EEEEEE" width="100%">         |
-</div>
-
-<br>
-
 <!-- PROJECT LOGO -->
 <div align="center">
   <img src="./assets/logos/svg/sentinelCore_dark.svg" alt="Logo" width="150" height="150">
@@ -21,38 +7,18 @@
   <h1 style="text-align: center; font-weight: 600; letter-spacing: 2px; border-bottom: none;">SENTINEL</h1>
 
   <p style="text-align: center; font-size: 18px;">
-    A network wide ad, adware, malware, spyware, tracker, analytics and crypto miner denier with a recursive, caching DNS resolver, DHCP Service and Alerting system and a Virtual Private Network all-in-one!
-    <br />
-    <a href="https://github.com/carlowisse/sentinel-lists">sentinelLists</a>&nbsp; &#183; &nbsp;
-    <a href="https://github.com/carlowisse/sentinel-unbound">sentinelUnbound</a>&nbsp; &#183; &nbsp;
-    <a href="https://github.com/carlowisse/sentinel">sentinelCore</a>&nbsp; &#183; &nbsp;
-    <a href="https://github.com/carlowisse/sentinel-alert">sentinelAlert</a>&nbsp; &#183; &nbsp;
-    <a href="https://github.com/carlowisse/sentinel-guard">sentinelGuard</a>
+    A network wide ad, adware, malware, spyware, tracker, analytics and crypto miner denier with a recursive, caching DNS resolver, and DNS-over-TLS all-in-one!
   </p>
-
-  <br>
-
-  <img src="./assets/logos/svg/sentinel_banner_dark.svg" alt="Logo" width="80%">
 </div>
 
 <br>
 
-## Modules
-* `sentinelLists` - A supermassive collection of curated **domain (12,717,020)**, **regex (1,177)** and **adblock (1,138,465)** lists
-* `sentinelUnbound` - A custom Unbound configuration
-* `sentinelCore` - A custom PI-Hole configuration
-* `sentinelAlert` - A custom DHCP Managment and Alerting system
-* `sentinelGuard` - A custom VPN (WireGuard) configuration with Web UI for easy management
-
-## Summary
+## What Does Sentinel Do?
 * Installs and Configures Pi-Hole
 * Installs and Configures Unbound DNS
-* Installs and Configures WireGuard VPN
-* Installs and Configures PiAlert
-* Loads Sentinel Lists
+* Installs and Configures Stubby for DNS-over-TLS using Quad9
 * Configures Static IP
 * Configures Firewall
-* **Web UI for Pi-Hole, Unbound, WireGuard and PiAlert**
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -63,9 +29,7 @@ Security is a very important factor when accessing the internet and unforunately
 
 Sentinel is the answer to these problems. Encrypting your data, denying all ads, trackers, crypto miners (browser), malware, adware, spyware and much more on a network level (no need to set it up on every device) and implements a validating, recursive, caching DNS resolver that runs locally so that YOU are in control.
 
-Alongside this, Sentinel also comes with a built in DHCP server that has a management and alerting system so that you can see what devices are on your network and if any new devices join, you will be notified.
-
-Finally, Sentinel also comes with a fully configured VPN (WireGuard) that you can use to access your network from anywhere in the world. This is great for when you are out and about and would like to leverage the security of your **sentinelEnabled** home network.
+There are also some notes on setting up gravity-sync if you wish to have a redundant DNS server on your network. (run two Pi-Holes in sync).
 
 **Here is why Sentinel would be good for you**
 * Deny ads, not just in your browser but also on TV streaming apps and other devices that don't allow plugins
@@ -83,8 +47,7 @@ Finally, Sentinel also comes with a fully configured VPN (WireGuard) that you ca
 * Deny AMP sites
 * Protect yourself against malware, adware and spyware (AKA: badware)
 * Speed up network using a caching DNS resolver
-* Get remote access into your network using a VPN
-* Control and monitor your network using a DHCP management and alerting system
+* Encrypt your DNS queries using DNS-over-TLS
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
 
@@ -93,17 +56,17 @@ Finally, Sentinel also comes with a fully configured VPN (WireGuard) that you ca
 ## Built With
 **Software**
 * [Pi-Hole](https://github.com/pi-hole)
-* [Pi.Alert](https://github.com/leiweibau/Pi.Alert)
 * [Unbound](https://github.com/NLnetLabs/unbound)
-* [WireGuard Tools](https://github.com/WireGuard/wireguard-tools)
+* [gravity-sync](https://github.com/vmstan/gravity-sync)
+* [Stubby](https://github.com/getdnsapi/stubby)
 
 **Hardware**
-* [Raspberry Pi 4 Model B 8GB](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)
-* [15W USB-C Power Supply](https://www.raspberrypi.com/products/type-c-power-supply/)
-* [Micro HDMI to Standard HDMI Cable](https://www.raspberrypi.com/products/micro-hdmi-to-standard-hdmi-a-cable/)
-* [Flirc Raspberry Pi 4 Case](https://flirc.tv/products/flirc-raspberrypi4-silver)
-* [CAT8 Ethernet Cable](https://www.amazon.com/s?k=cat+8+cable&i=electronics&ref=nb_sb_noss)
-* [32GB SanDisk Extreme Pro Micro SD Card](https://www.westerndigital.com/en-au/products/memory-cards/sandisk-extreme-pro-uhs-ii-sd#SDSDXDK-032G-GN4IN)
+* Raspberry Pi 4 Model B 8GB
+* 15W USB-C Power Supply
+* Micro HDMI to Standard HDMI Cable
+* Flirc Raspberry Pi 4 Case
+* CAT8 Ethernet Cable
+* 32GB SanDisk Extreme Pro Micro SD Card
 
 **Optional**
 * Mouse
@@ -113,26 +76,47 @@ Finally, Sentinel also comes with a fully configured VPN (WireGuard) that you ca
 
 <br>
 
-## Requirements
-### Install Git & Clone Repo On To Raspeberry Pi
-> You must clone Sentinel in the root directory
+## Installation
+> _This installation uses a single script to set up **Static IP**, **Pi-Hole**, **Unbound**, **Firewall** and **Stubby**_
+
+1. SSH into your Raspberry Pi
+```sh
+ssh pi@<ip-address>
 ```
-sudo apt install git
 
+2. Update your Raspberry Pi
+```sh
+sudo apt update --fix-missing -y
+sudo apt upgrade -y
+sudo apt dist-upgrade -y --allow-downgrades
+sudo apt autoremove --purge -y
 cd
-
+touch .hushlogin
+sudo apt install git -y
 git clone https://github.com/carlowisse/sentinel.git
 ```
 
+3. Setup Raspberry Pi
+```sh
+sudo raspi-config
+```
+> System Options > Hostname
 <br>
+> Advanced Options > Expand Filesystem
+<br>
+> Finish > Reboot
 
-## Installation
-> _This installation uses a single script to set up **Static IP**, **Pi-Hole**, **Unbound**, **IPTables** and **Sentinel**_
+4. Clone This Repository
+```sh
+cd
+git clone https://github.com/carlowisse/sentinel.git
+```
 
-1. Make executable: `chmod +x ./sys-prep.sh`
-2. Make executable: `chmod +x ./init.sh`
-3. Prepare system: `sudo ./sys-prep.sh`
-4. Run installer: `sudo ./init.sh`
+5. Run The Script
+```sh
+cd sentinel
+sudo bash install.sh
+```
 
 <br>
 
@@ -154,8 +138,6 @@ If you have a suggestion that would make this better, please fork the repo and c
 ## Issues
 If there are any issues please raise an issue on the issue tab and I will look into it.
 
-If there is an issue with the lists please go to the [sentinel-lists](https://github.com/carlowisse/sentinel-lists) repository and raise an issue there.
-
 ## License
 Distributed under the MIT License. See [LICENSE](LICENSE.txt) for more information.
 
@@ -168,6 +150,5 @@ Carlo Wisse - [Twitter](https://twitter.com/carlowisse) - [Email](mailto:contact
 
 ## Acknowledgments
 * [Choose an Open Source License](https://choosealicense.com)
-* [leiweibau](https://github.com/leiweibau)
 
 <a href="#top"><img align="right" src="https://img.shields.io/badge/back%20to%20top-&#8593;-blue?style=for-the-badge"></a>
