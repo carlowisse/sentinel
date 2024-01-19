@@ -76,6 +76,21 @@ There are also some notes on setting up gravity-sync if you wish to have a redun
 
 <br>
 
+## Lists
+> In the [lists](./lists/) directory you will find lists of links to many different blocklists that you can use with Pi-Hole. These lists are not mine and I do not take credit for them. I have simply compiled them into files for ease of use.
+>
+> Alongside this, I have included a script that makes it easy to specify one of the `.txt` files that contain a list of links to blocklists and have it automatically insert them into Pi-Hole.
+
+* [Black Lists](./lists/black)
+  * [adblock format](./lists/black/adblocks)
+  * [domains format](./lists/black/domains)
+  * [regex format](./lists/black/regexes)
+* [White Lists](./lists/white)
+  * [domains format](./lists/white/domains)
+  * [regex format](./lists/white/regexes)
+* [DNS Providers](./lists/dns-providers.md)
+<br>
+
 ## Installation
 > _This installation uses a single script to set up **Static IP**, **Pi-Hole**, **Unbound**, **Firewall** and **Stubby**_
 
