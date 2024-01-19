@@ -3,6 +3,9 @@
 
 BLACK_FILE=$1
 BLACK_COUNT=$(wc -l <"$BLACK_FILE")
+if [[ $BLACK_COUNT -eq 0 ]]; then
+    BLACK_COUNT=1
+fi
 
 echo "APPLYING $BLACK_COUNT BLACKLISTS..."
 
